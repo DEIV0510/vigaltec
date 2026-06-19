@@ -6,10 +6,10 @@
 
   /* ---------- CONFIG (editar datos reales aquí) ---------- */
   const CONFIG = {
-    waNumber: '573000000000',                 // WhatsApp en formato internacional sin + ni espacios
-    phoneDisplay: '+57 300 000 0000',
+    waNumber: '573168769923',                 // WhatsApp en formato internacional sin + ni espacios
+    phoneDisplay: '+57 316 876 9923',
     email: 'contacto@vigaltec.com',
-    address: 'Colombia · Cobertura nacional',
+    address: 'Calle 40 # 4B-39',
     waGreeting: 'Hola VIGALTEC 👋, quisiera más información sobre sus servicios de estructuras metálicas.'
   };
 
