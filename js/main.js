@@ -58,6 +58,7 @@
         loader.classList.add('is-done');
         document.body.classList.remove('no-scroll');
         startReveals();
+        if (window.__heroVideoPlay) window.__heroVideoPlay(); // arranca el video al entrar
       }, 240);
     }
     const minTime = new Promise(r => setTimeout(r, prefersReduced ? 250 : 1100));
@@ -180,12 +181,38 @@
     const v = document.querySelector('.hero__video');
     if (!v) return;
     if (prefersReduced) { v.removeAttribute('autoplay'); try { v.pause(); } catch (e) {} return; }
-    v.muted = true; // asegura autoplay en Safari/iOS
-    const tryPlay = () => { const p = v.play(); if (p && p.catch) p.catch(() => {}); };
-    tryPlay();
-    // reintento al primer gesto si el navegador bloquea el autoplay
-    ['click', 'touchstart', 'scroll'].forEach(ev =>
-      document.addEventListener(ev, tryPlay, { once: true, passive: true }));
+
+    // Forzar condiciones de autoplay (Safari/iOS/Chrome móvil)
+    v.muted = true; v.defaultMuted = true; v.playsInline = true;
+    v.setAttribute('muted', ''); v.setAttribute('playsinline', '');
+
+    let playing = false;
+    const attempt = () => {
+      if (playing || !v.paused) { playing = true; return; }
+      const p = v.play();
+      if (p && p.then) p.then(() => { playing = true; }).catch(() => {});
+    };
+
+    // Reproducir en cuanto el navegador tenga datos suficientes
+    ['loadedmetadata', 'loadeddata', 'canplay', 'canplaythrough'].forEach(ev =>
+      v.addEventListener(ev, attempt));
+    v.addEventListener('playing', () => { playing = true; });
+
+    // Intento inmediato + reintentos cortos durante ~5s (cubre la carga inicial)
+    attempt();
+    let tries = 0;
+    const iv = setInterval(() => { attempt(); if (playing || ++tries > 14) clearInterval(iv); }, 350);
+
+    // Si el navegador bloquea el autoplay, arrancar con el primer gesto/interacción
+    const onGesture = () => attempt();
+    ['pointerdown', 'touchstart', 'keydown', 'scroll', 'mousemove', 'click'].forEach(ev =>
+      window.addEventListener(ev, onGesture, { passive: true }));
+
+    // Reintentar al volver a la pestaña
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) attempt(); });
+
+    window.__heroVideoPlay = attempt; // usado por el loader al cerrarse
+    try { v.load(); } catch (e) {}
   }
 
   /* ---------- GALLERY FILTER ---------- */
