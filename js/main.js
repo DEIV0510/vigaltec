@@ -57,6 +57,7 @@
       setTimeout(() => {
         loader.classList.add('is-done');
         document.body.classList.remove('no-scroll');
+        document.body.classList.add('loaded'); // dispara la animación del título del hero
         startReveals();
         if (window.__heroVideoPlay) window.__heroVideoPlay(); // arranca el video al entrar
       }, 240);
@@ -363,6 +364,37 @@
     });
   }
 
+  /* ---------- SCROLL PROGRESS ---------- */
+  function initScrollProgress() {
+    const bar = $('#scrollProgress');
+    if (!bar) return;
+    let ticking = false;
+    const update = () => {
+      const h = document.documentElement;
+      const max = h.scrollHeight - h.clientHeight;
+      bar.style.transform = 'scaleX(' + (max > 0 ? Math.min(h.scrollTop / max, 1) : 0) + ')';
+      ticking = false;
+    };
+    window.addEventListener('scroll', () => { if (!ticking) { requestAnimationFrame(update); ticking = true; } }, { passive: true });
+    update();
+  }
+
+  /* ---------- BOTONES MAGNÉTICOS ---------- */
+  function initMagnetic() {
+    if (prefersReduced || !window.matchMedia('(hover:hover) and (pointer:fine)').matches) return;
+    $$('.btn--lg:not(.btn--block), .btn--xl').forEach(btn => {
+      let raf = null;
+      btn.addEventListener('pointermove', e => {
+        const r = btn.getBoundingClientRect();
+        const mx = e.clientX - r.left - r.width / 2;
+        const my = e.clientY - r.top - r.height / 2;
+        if (raf) cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(() => { btn.style.transform = 'translate(' + (mx * 0.2) + 'px,' + (my * 0.32) + 'px)'; });
+      });
+      btn.addEventListener('pointerleave', () => { if (raf) cancelAnimationFrame(raf); btn.style.transform = ''; });
+    });
+  }
+
   /* ---------- BACK TO TOP + data-quote focus ---------- */
   function initMisc() {
     const top = $('#toTop');
@@ -391,6 +423,8 @@
     initLightbox();
     initTesti();
     initForm();
+    initScrollProgress();
+    initMagnetic();
     initMisc();
     // por si el loader tarda, revelar al primer scroll igualmente
     window.addEventListener('scroll', startReveals, { once: true });

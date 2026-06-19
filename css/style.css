@@ -110,6 +110,11 @@ input,textarea,select{font-family:inherit;font-size:16px}
 @media (prefers-reduced-motion:reduce){
   .reveal{opacity:1!important;transform:none!important;transition:none}
   .loader__logo{animation:none;opacity:1}
+  .marquee__track{animation:none}
+  .btn--primary::after{display:none}
+  .scroll-progress{display:none}
+  .hero__title-in{opacity:1!important;transform:none!important;animation:none}
+  .section__title--center::after{width:64px;transition:none}
   html{scroll-behavior:auto}
 }
 
@@ -463,6 +468,52 @@ input,textarea,select{font-family:inherit;font-size:16px}
 .lb__nav:hover{background:var(--c-orange);border-color:var(--c-orange)}
 .lb__nav svg{width:26px;height:26px}
 .lb__prev{left:3vw}.lb__next{right:3vw}
+
+/* =====================================================
+   ANIMACIONES EXTRA
+===================================================== */
+/* Barra de progreso de scroll */
+.scroll-progress{position:fixed;top:0;left:0;height:3px;width:100%;z-index:1200;transform:scaleX(0);
+  transform-origin:0 50%;background:linear-gradient(90deg,var(--c-orange),var(--c-orange-2));will-change:transform}
+
+/* Hero: el título sube tras una máscara */
+.hero__title{overflow:hidden;padding-bottom:.06em}
+.hero__title-in{display:block;transform:translateY(108%);opacity:0}
+body.loaded .hero__title-in{animation:heroTitleUp 1s var(--ease) .1s forwards}
+@keyframes heroTitleUp{to{transform:none;opacity:1}}
+
+/* Línea de acento que se dibuja bajo los títulos centrados */
+.section__title--center::after{content:"";display:block;width:0;height:4px;margin:1.1rem auto 0;border-radius:4px;
+  background:var(--c-orange);transition:width .7s var(--ease) .25s}
+.section__title--center.is-visible::after{width:64px}
+
+/* Cinta infinita (marquee) */
+.marquee{overflow:hidden;white-space:nowrap;display:flex}
+.marquee--orange{background:var(--c-orange);color:#141414}
+.marquee__track{display:flex;flex:none;align-items:center;animation:marquee 34s linear infinite;will-change:transform}
+.marquee:hover .marquee__track{animation-play-state:paused}
+.marquee__group{display:flex;flex:none;align-items:center}
+.marquee__item{font-family:var(--f-display);font-weight:600;text-transform:uppercase;letter-spacing:.06em;
+  font-size:clamp(1rem,2.1vw,1.4rem);padding:.95rem 0;display:inline-flex;align-items:center}
+.marquee__item svg{width:.85em;height:.85em;margin:0 clamp(1.1rem,2.8vw,2rem);opacity:.8}
+@keyframes marquee{to{transform:translateX(-50%)}}
+
+/* Brillo (sheen) en botones primarios */
+.btn--primary::after{content:"";position:absolute;top:0;bottom:0;left:-130%;width:55%;pointer-events:none;
+  background:linear-gradient(115deg,transparent,rgba(255,255,255,.45),transparent);transform:skewX(-18deg)}
+.btn--primary:hover::after{animation:sheen .85s var(--ease)}
+@keyframes sheen{to{left:150%}}
+
+/* Variedad en las apariciones (sin tocar el HTML) */
+.about__media.reveal{transform:translateX(-46px)}
+.about__media.reveal.is-visible{transform:none}
+.service.reveal{transform:translateY(36px) scale(.965)}
+.service.reveal.is-visible{transform:none}
+.gitem.reveal{transform:translateY(30px) scale(.96)}
+.gitem.reveal.is-visible{transform:none}
+.counter.reveal{transform:translateY(26px) scale(.94)}
+.counter.reveal.is-visible{transform:none}
+.btn--lg,.btn--xl{transition:transform .28s var(--ease),box-shadow .25s var(--ease),background .25s ease}
 
 /* =====================================================
    RESPONSIVE
