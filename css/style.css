@@ -109,6 +109,7 @@ input,textarea,select{font-family:inherit;font-size:16px}
 .reveal.is-visible{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){
   .reveal{opacity:1!important;transform:none!important;transition:none}
+  .loader__logo{animation:none;opacity:1}
   html{scroll-behavior:auto}
 }
 
@@ -121,22 +122,15 @@ input,textarea,select{font-family:inherit;font-size:16px}
   background:radial-gradient(60% 60% at 50% 40%,rgba(255,107,0,.10),transparent 70%)}
 .loader.is-done{opacity:0;visibility:hidden}
 .loader__inner{position:relative;display:flex;flex-direction:column;align-items:center;gap:.4rem}
-.loader__mark{width:118px;height:auto;overflow:visible}
-.loader__mark .lm-post,.loader__mark .lm-base,.loader__mark .lm-beam{fill:#fff;opacity:0;transform:translateY(8px);
-  animation:lmIn .55s var(--ease) forwards}
-.loader__mark .lm-beam{animation-delay:.15s}
-.loader__mark .lm-post{animation-delay:.28s}
-.loader__mark .lm-base{animation-delay:.42s}
-.loader__mark .lm-arch{stroke:var(--c-orange);stroke-dasharray:100;stroke-dashoffset:100;
-  animation:lmDraw 1.05s var(--ease) forwards .1s}
-@keyframes lmIn{to{opacity:1;transform:none}}
-@keyframes lmDraw{to{stroke-dashoffset:0}}
-.loader__word{font-family:var(--f-display);font-weight:700;letter-spacing:.34em;color:#fff;
-  font-size:1.7rem;margin-top:.7rem;padding-left:.34em;opacity:0;animation:lmIn .6s ease forwards .6s}
-.loader__tag{font-family:var(--f-display);font-weight:400;letter-spacing:.42em;font-size:.62rem;
-  color:var(--on-dark-soft);opacity:0;animation:lmIn .6s ease forwards .8s}
+.loader__logo{width:min(280px,66vw);height:auto;opacity:0;
+  animation:loaderLogoIn .9s var(--ease) forwards .12s}
+@keyframes loaderLogoIn{
+  0%{opacity:0;transform:translateY(12px) scale(.97);clip-path:inset(0 100% 0 0)}
+  55%{opacity:1}
+  100%{opacity:1;transform:none;clip-path:inset(0 0 0 0)}
+}
 .loader__bar{width:210px;max-width:60vw;height:3px;background:rgba(255,255,255,.14);border-radius:3px;
-  overflow:hidden;margin-top:1.4rem}
+  overflow:hidden;margin-top:1.8rem}
 .loader__fill{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--c-orange),var(--c-orange-2));
   transition:width .2s linear}
 .loader__pct{font-family:var(--f-display);font-size:.78rem;letter-spacing:.15em;color:var(--on-dark-soft);margin-top:.55rem}
@@ -150,11 +144,9 @@ input,textarea,select{font-family:inherit;font-size:16px}
   box-shadow:0 1px 0 var(--line-dark),0 10px 30px rgba(0,0,0,.4)}
 .header__row{display:flex;align-items:center;justify-content:space-between;gap:1rem}
 
-.brand{display:inline-flex;align-items:center;gap:.6rem;color:#fff}
-.brand__mark{width:46px;height:auto;flex:none}
-.brand__text{display:flex;flex-direction:column;line-height:1}
-.brand__text strong{font-family:var(--f-display);font-weight:700;font-size:1.32rem;letter-spacing:.13em}
-.brand__text small{font-size:.54rem;letter-spacing:.34em;color:var(--on-dark-soft);margin-top:.18rem}
+.brand{display:inline-flex;align-items:center;color:#fff}
+.brand__logo{height:42px;width:auto;display:block;transition:transform .3s var(--ease)}
+.brand:hover .brand__logo{transform:scale(1.04)}
 
 .nav{display:flex;align-items:center;gap:.3rem}
 .nav__link{font-family:var(--f-display);font-weight:500;text-transform:uppercase;letter-spacing:.08em;
@@ -412,6 +404,7 @@ input,textarea,select{font-family:inherit;font-size:16px}
 .footer{background:var(--c-carbon-2);color:var(--on-dark-soft);padding-top:clamp(3rem,6vw,5rem)}
 .footer__grid{display:grid;grid-template-columns:2fr 1fr 1fr 1.4fr;gap:2.2rem;padding-bottom:3rem}
 .brand--footer{margin-bottom:1.2rem}
+.brand--footer .brand__logo{height:48px}
 .footer__desc{font-size:.92rem;max-width:340px;margin-bottom:1.4rem}
 .footer__social{display:flex;gap:.6rem}
 .footer__social a{width:42px;height:42px;border-radius:10px;border:1px solid var(--line-dark);
@@ -498,7 +491,8 @@ input,textarea,select{font-family:inherit;font-size:16px}
   .timeline{grid-template-columns:1fr}
   .footer__grid{grid-template-columns:1fr;gap:2rem}
   .footer__bar-row{flex-direction:column;text-align:center;gap:.4rem}
-  .brand__text small{font-size:.5rem;letter-spacing:.28em}
+  .brand__logo{height:34px}
+  .brand--footer .brand__logo{height:42px}
   .hero{min-height:92svh}
   .hero__mini{gap:1.4rem 1.8rem}
   .hero__mini strong{font-size:1.5rem}
