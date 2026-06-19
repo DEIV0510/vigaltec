@@ -232,8 +232,7 @@ input,textarea,select{font-family:inherit;font-size:16px}
 .about__badge{position:absolute;top:8%;right:0;z-index:4;background:var(--c-orange);color:#fff;
   border-radius:var(--r);padding:1rem 1.2rem;display:flex;flex-direction:column;align-items:flex-start;line-height:1;
   box-shadow:0 16px 34px rgba(255,107,0,.4);max-width:150px}
-.about__badge-num{font-family:var(--f-display);font-weight:700;font-size:2.6rem}
-.about__badge-plus{font-family:var(--f-display);font-weight:700;font-size:1.4rem;margin-top:-1.9rem;margin-left:2.7rem;position:relative}
+.about__badge-top{font-family:var(--f-display);font-weight:700;font-size:2.7rem;line-height:1;color:#fff}
 .about__badge-txt{font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;margin-top:.5rem;font-weight:600}
 .about__lead{font-size:1.08rem;color:var(--ink-soft);margin-bottom:1.4rem}
 .about__list{display:flex;flex-direction:column;gap:.8rem;margin-bottom:1.6rem}
@@ -568,4 +567,52 @@ body.loaded .hero__title-in{animation:heroTitleUp 1s var(--ease) .1s forwards}
 /* fondo fijo solo en pantallas grandes (evita jank en móvil) */
 @media (max-width:860px){
   .section--why::before,.section--cta{background-attachment:scroll}
+}
+
+/* =====================================================
+   MEJORAS MÓVIL
+===================================================== */
+/* Sin destello gris al tocar */
+a,button,.btn,.filter,.nav__link,.gitem,.fab{-webkit-tap-highlight-color:transparent}
+
+/* El header fijo no debe tapar los títulos al navegar por el menú */
+#inicio,#nosotros,#servicios,#proyectos,#porque,#proceso,#testimonios,#contacto{scroll-margin-top:74px}
+
+/* Áreas seguras: notch superior y barra de gestos inferior */
+.header{padding-top:max(.7rem,env(safe-area-inset-top))}
+.fab--wa{right:calc(16px + env(safe-area-inset-right));bottom:calc(16px + env(safe-area-inset-bottom))}
+.fab--top{right:calc(16px + env(safe-area-inset-right));bottom:calc(78px + env(safe-area-inset-bottom))}
+.lb__close{top:calc(18px + env(safe-area-inset-top))}
+
+@media (max-width:860px){
+  .nav{padding-top:calc(5rem + env(safe-area-inset-top));padding-bottom:calc(2rem + env(safe-area-inset-bottom))}
+}
+
+@media (max-width:600px){
+  /* Marquee más ágil y legible en móvil */
+  .marquee__track{animation-duration:24s}
+  .marquee__item{font-size:1.02rem;padding:.85rem 0}
+  /* Hero: aire suficiente, respeta el notch y oculta el indicador (estorba en pantallas cortas) */
+  .hero{padding-top:calc(82px + env(safe-area-inset-top));padding-bottom:2.6rem}
+  .hero__scroll{display:none}
+  .hero__subtitle{font-size:1.02rem}
+  .hero__mini{margin-top:2rem;padding-top:1.5rem;gap:1.2rem 1.6rem}
+  /* About más compacto */
+  .about__media{min-height:330px;max-width:420px}
+  .about__badge{padding:.85rem 1rem;max-width:138px}
+  .about__badge-top{font-size:2.3rem}
+  .section__head{margin-bottom:2rem}
+  /* Tap targets cómodos */
+  .nav__link{padding-block:1.05rem}
+  .filter{padding:.65rem 1.15rem}
+  /* Espaciado interno de tarjetas un poco más cómodo */
+  .service__body{padding:1.3rem 1.2rem 1.5rem}
+  .contact__form{padding:1.4rem 1.2rem}
+}
+
+@media (max-width:380px){
+  .hero__mini{flex-direction:row;flex-wrap:wrap;gap:1rem 1.4rem}
+  .hero__mini strong{font-size:1.4rem}
+  .about__media{min-height:300px}
+  .gallery{gap:.6rem}
 }

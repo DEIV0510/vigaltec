@@ -164,6 +164,7 @@
     const bg = $('.hero__bg');
     const hero = $('.hero');
     if (!bg || !hero || prefersReduced) return;
+    if (window.matchMedia('(max-width:860px)').matches) return; // sin parallax en móvil (scroll más fluido)
     let ticking = false;
     const update = () => {
       const y = window.scrollY;
