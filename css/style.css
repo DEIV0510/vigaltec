@@ -116,10 +116,17 @@ input,textarea,select{font-family:inherit;font-size:16px}
 /* =====================================================
    LOADER
 ===================================================== */
-.loader{position:fixed;inset:0;z-index:3000;background:var(--c-carbon-2);
-  display:grid;place-items:center;transition:opacity .6s ease,visibility .6s ease}
-.loader::before{content:"";position:absolute;inset:0;
-  background:radial-gradient(60% 60% at 50% 40%,rgba(255,107,0,.10),transparent 70%)}
+.loader{position:fixed;inset:0;z-index:3000;
+  background:
+    radial-gradient(85% 65% at 50% 30%,rgba(255,107,0,.14),transparent 60%),
+    linear-gradient(160deg,#202327 0%,#121315 54%,#070708 100%);
+  display:grid;place-items:center;transition:opacity .5s ease,visibility .5s ease}
+.loader::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);
+  background-size:52px 52px;
+  -webkit-mask-image:radial-gradient(circle at 50% 42%,#000 24%,transparent 72%);
+  mask-image:radial-gradient(circle at 50% 42%,#000 24%,transparent 72%)}
 .loader.is-done{opacity:0;visibility:hidden}
 .loader__inner{position:relative;display:flex;flex-direction:column;align-items:center;gap:.4rem}
 .loader__logo{width:min(280px,66vw);height:auto;opacity:0;

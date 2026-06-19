@@ -20,12 +20,14 @@ const projects = [
 
 // Imágenes de fondo / rol específico: fuente -> nombre destino, ancho, calidad
 const heroes = [
-  { src: 'Techo3', out: 'hero', w: 1600, q: 82, enlarge: true },
-  { src: 'techo4', out: 'about', w: 1100, q: 84, enlarge: true },
-  { src: 'techo8', out: 'whyus', w: 1700, q: 78, enlarge: true },
-  { src: 'techo5', out: 'cta', w: 1700, q: 78, enlarge: true },
-  { src: 'techo6', out: 'about2', w: 900, q: 84, enlarge: true }
+  { src: 'Techo3', out: 'hero', w: 1600, q: 90, enlarge: true },
+  { src: 'techo4', out: 'about', w: 1200, q: 93, enlarge: true },
+  { src: 'techo8', out: 'whyus', w: 1700, q: 88, enlarge: true },
+  { src: 'techo5', out: 'cta', w: 1700, q: 88, enlarge: true },
+  { src: 'techo6', out: 'about2', w: 1000, q: 93, enlarge: true }
 ];
+
+const WEBP = { effort: 6, smartSubsample: true };
 
 async function run() {
   // 1) Galería: full (lightbox) + thumb (tarjeta)
@@ -35,13 +37,13 @@ async function run() {
     const lower = name.toLowerCase();
 
     await sharp(input)
-      .resize({ width: 1400, withoutEnlargement: true })
-      .webp({ quality: 86 })
+      .resize({ width: 1500, withoutEnlargement: true })
+      .webp({ quality: 94, ...WEBP })
       .toFile(path.join(OUT_PROJ, lower + '.webp'));
 
     await sharp(input)
-      .resize({ width: 800, withoutEnlargement: true })
-      .webp({ quality: 80 })
+      .resize({ width: 900, withoutEnlargement: true })
+      .webp({ quality: 92, ...WEBP })
       .toFile(path.join(OUT_PROJ, lower + '-thumb.webp'));
 
     console.log('proyecto OK ->', lower);
@@ -53,7 +55,7 @@ async function run() {
     if (!fs.existsSync(input)) { console.warn('NO existe', input); continue; }
     await sharp(input)
       .resize({ width: h.w, withoutEnlargement: !h.enlarge })
-      .webp({ quality: h.q })
+      .webp({ quality: h.q, ...WEBP })
       .toFile(path.join(OUT_IMG, h.out + '.webp'));
     console.log('fondo OK ->', h.out);
   }

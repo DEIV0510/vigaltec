@@ -58,16 +58,16 @@
         loader.classList.add('is-done');
         document.body.classList.remove('no-scroll');
         startReveals();
-      }, 380);
+      }, 240);
     }
-    const minTime = new Promise(r => setTimeout(r, prefersReduced ? 300 : 1700));
+    const minTime = new Promise(r => setTimeout(r, prefersReduced ? 250 : 1100));
     const pageLoad = new Promise(r => {
       if (document.readyState === 'complete') r();
       else window.addEventListener('load', r, { once: true });
     });
     Promise.all([minTime, pageLoad]).then(done);
     // failsafe
-    setTimeout(done, 5000);
+    setTimeout(done, 4000);
   }
 
   /* ---------- HEADER + SCROLLSPY ---------- */
