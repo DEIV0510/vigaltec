@@ -175,6 +175,19 @@
     }, { passive: true });
   }
 
+  /* ---------- HERO VIDEO ---------- */
+  function initHeroVideo() {
+    const v = document.querySelector('.hero__video');
+    if (!v) return;
+    if (prefersReduced) { v.removeAttribute('autoplay'); try { v.pause(); } catch (e) {} return; }
+    v.muted = true; // asegura autoplay en Safari/iOS
+    const tryPlay = () => { const p = v.play(); if (p && p.catch) p.catch(() => {}); };
+    tryPlay();
+    // reintento al primer gesto si el navegador bloquea el autoplay
+    ['click', 'touchstart', 'scroll'].forEach(ev =>
+      document.addEventListener(ev, tryPlay, { once: true, passive: true }));
+  }
+
   /* ---------- GALLERY FILTER ---------- */
   function initFilters() {
     const btns = $$('.filter');
@@ -346,6 +359,7 @@
     initNav();
     initCounters();
     initParallax();
+    initHeroVideo();
     initFilters();
     initLightbox();
     initTesti();

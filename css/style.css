@@ -168,10 +168,12 @@ input,textarea,select{font-family:inherit;font-size:16px}
 ===================================================== */
 .hero{position:relative;min-height:100svh;display:flex;align-items:center;
   color:#fff;overflow:hidden;padding-top:90px}
-.hero__bg{position:absolute;inset:-12% 0;background:url("../assets/img/hero.webp") center/cover no-repeat;
+.hero__bg{position:absolute;inset:-12% 0;background:#0b0b0b url("../assets/img/hero.webp") center/cover no-repeat;
   transform:scale(1.12);will-change:transform;transition:transform .1s linear}
+.hero__video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
 .hero__overlay{position:absolute;inset:0;
-  background:linear-gradient(105deg,rgba(8,8,8,.94) 0%,rgba(10,10,10,.78) 42%,rgba(10,10,10,.42) 75%,rgba(10,10,10,.2) 100%)}
+  background:linear-gradient(105deg,rgba(8,8,8,.9) 0%,rgba(10,10,10,.66) 44%,rgba(10,10,10,.3) 76%,rgba(10,10,10,.12) 100%),
+             linear-gradient(0deg,rgba(10,10,10,.55) 0%,transparent 32%)}
 .hero__grid-lines{position:absolute;inset:0;opacity:.5;pointer-events:none;
   background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);
   background-size:64px 64px;mask-image:linear-gradient(105deg,#000,transparent 70%)}
